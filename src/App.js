@@ -2,7 +2,6 @@ import * as React from "react";
 import { ethers } from "ethers";
 import './App.css';
 import abi from "./utils/WavePortal.json";
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 export default function App() {
@@ -29,8 +28,8 @@ export default function App() {
     ethereum.request({ method: 'eth_accounts' })
     .then((accounts) => {
       // ** There could be multiple accounts
-      if(accounts.length != 0) {
-        // Get the first account
+      if(accounts.length !== 0) {
+        // ** Get the first account
         const account = accounts[0];
         console.log("Using the first authorized account:", account);
 
@@ -39,6 +38,9 @@ export default function App() {
 
         // ** Get all the waves
         getAllWaves();
+
+        // ** Get the wave count
+        getWaveCount();
       } else {
         console.log("No authorized account found!");
       }
@@ -64,7 +66,7 @@ export default function App() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const waveportalContract = new ethers.Contract(contractAddress, contractABI, signer);
-    
+
     let count = await waveportalContract.getTotalWaves();
     setCurrentWaveCount(count.toNumber());
     console.log("Retrieved total wave count...", count.toNumber());
@@ -82,9 +84,6 @@ export default function App() {
     count = await waveportalContract.getTotalWaves();
     setCurrentWaveCount(count.toNumber());
     console.log("Retrieved total wave count...", count.toNumber());
-
-    // ** Refetch our waves
-    // getAllWaves();
   }
 
   const getWaveCount = async () => {
@@ -122,10 +121,9 @@ export default function App() {
       }])
     })
   }
-  
+
   React.useEffect(() => {
     checkIfWalletIsConnected();
-    getWaveCount();
   }, [])
 
   return (
