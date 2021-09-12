@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as React from "react";
 import { ethers } from "ethers";
 import './App.css';
@@ -124,6 +125,7 @@ export default function App() {
 
   React.useEffect(() => {
     checkIfWalletIsConnected();
+    // eslint-disable-next-line
   }, [])
 
   return (
@@ -131,7 +133,7 @@ export default function App() {
 
       <div className="dataContainer">
         <div className="header">
-        👋 Hey there!
+        <span role="img" aria-label="wave">👋</span> Hey there!
         </div>
 
         <div className="bio">
